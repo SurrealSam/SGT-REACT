@@ -10,6 +10,10 @@ const bodyParser = require("body-parser");
 const app = express();
 const User = require("./user");
 const dotenv = require('dotenv');
+const Item = require('./items');
+const Movement = require('./movement');
+
+
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 
 dotenv.config();
@@ -80,6 +84,64 @@ app.post("/register", (req, res) => {
 app.get("/user", (req, res) => {
   res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
 });
+
+app.get("/items", (req, res) => {
+  const filter = {
+    "type":"item"
+  }
+  Item.find(filter, (err, result)=>{
+    if (err){
+      console.log(err);
+    }else{
+      console.log(result);
+      res.json(result);
+    }
+    
+    
+  })
+  
+});
+
+app.get("/movements/:id", (req, res) => {
+  const sku = req.params.id;
+  const filter = {
+    "type":"movement",
+    "sku": sku
+  }
+  Movement.find(filter, (err, result)=>{
+    if (err){
+      console.log(err);
+    }else{
+      console.log(result);
+      res.json(result);
+    }
+    
+    
+  })
+  
+});
+
+app.get("/movements", (req, res) => {
+  const filter = {
+    "type":"movement"
+  }
+  Movement.find(filter, (err, result)=>{
+    if (err){
+      console.log(err);
+    }else{
+      console.log(result);
+      res.json(result);
+    }
+    
+    
+  })
+  
+});
+
+
+
+
+
 //----------------------------------------- END OF ROUTES---------------------------------------------------
 //Start Server
 app.listen(4000, () => {
