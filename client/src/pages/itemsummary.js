@@ -99,28 +99,47 @@ class ItemSummary extends React.Component {
             let totalQuantity = 0;
             let movementArray = this.filterMovements(item.sku);
             this.appendData(item);
-            
+
             movementArray.forEach(item => {
                 this.appendLot(item);
 
+                if (item.expiration) {
+                    if (this.isNotExpired(item.expiration)) {
+                        if (item.movement === "shipping") {
 
-                if (item.movement === "shipping") {
 
+                            totalQuantity = totalQuantity - parseInt(item.quantity)
+
+
+
+                        }
+                        if (item.movement === "receiving") {
+
+                            totalQuantity = totalQuantity + parseInt(item.quantity)
+
+                        }
+                    }
+                } else {
                     
-                        totalQuantity =  totalQuantity - parseInt(item.quantity)
-                    
+                    if (item.movement === "shipping") {
 
 
+                        totalQuantity = totalQuantity - parseInt(item.quantity)
+
+
+
+                    }
+                    if (item.movement === "receiving") {
+
+                        totalQuantity = totalQuantity + parseInt(item.quantity)
+
+                    }
                 }
-                if (item.movement === "receiving") {
 
-                    totalQuantity =  totalQuantity + parseInt(item.quantity)
-
-                }
             })
             this.appendTotal(totalQuantity);
         })
-        
+
     }
 
 
