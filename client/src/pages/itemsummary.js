@@ -202,10 +202,11 @@ class ItemSummary extends React.Component {
         const itemDiv =
             <li className={`list-group-item ${listColor}`}>
                 <div className="row">
-                    <div className="col-md-6 "></div>
+                    
                     <div className="col-md-2">Lot: {lot.lot}</div>
                     <div className="col-md-2">Expiration Date: {lot.expiration}</div>
                     <div className="col-md-2">Quantity: {lot.quantity}</div>
+                    <div className="col-md-6 "></div>
 
                 </div><br></br>
             </li>
@@ -221,8 +222,9 @@ class ItemSummary extends React.Component {
         const itemDiv =
             <li>
                 <div className="row">
-                    <div className="col-md-10 "></div>
+                    <div className="col-md-4 "></div>
                     <div className="col-md-2">Total: {total}</div>
+                    <div className="col-md-6 "></div>
 
                 </div><br></br>
             </li>
@@ -350,7 +352,7 @@ class ItemSummary extends React.Component {
         return (
             <div id="mainContainer">
                 <div >
-                    <button onClick={() => this.buildWholeCard()}>Build Cards</button>
+                    <button onClick={() => this.buildWholeCard()}>View Summary</button>
 
                 </div>
                 <div id="display-data-Container">

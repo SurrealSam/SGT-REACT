@@ -3,12 +3,12 @@ import Axios from "axios";
 import auth from '../auth';
 
 function Login(props) {
-  const [registerUsername, setRegisterUsername] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
+  /* const [registerUsername, setRegisterUsername] = useState("");
+  const [registerPassword, setRegisterPassword] = useState(""); */
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const [data, setData] = useState(null);
-  const register = () => {
+  /* const [data, setData] = useState(null); */
+  /* const register = () => {
     Axios({
       method: "POST",
       data: {
@@ -18,7 +18,7 @@ function Login(props) {
       withCredentials: true,
       url: "http://localhost:4000/register",
     }).then((res) => console.log(res));
-  };
+  }; */
   const login = () => {
     Axios({
       method: "POST",
@@ -38,7 +38,7 @@ function Login(props) {
         }
     });
   };
-  const getUser = () => {
+  /* const getUser = () => {
     Axios({
       method: "GET",
       withCredentials: true,
@@ -47,10 +47,10 @@ function Login(props) {
       setData(res.data);
       console.log(res.data);
     });
-  };
+  }; */
   return (
     <div className="App">
-      <div>
+      {/* <div>
         <h1>Register</h1>
         <input
           placeholder="username"
@@ -61,7 +61,7 @@ function Login(props) {
           onChange={(e) => setRegisterPassword(e.target.value)}
         />
         <button onClick={register}>Submit</button>
-      </div>
+      </div> */}
 
       <div>
         <h1>Login</h1>
@@ -76,11 +76,11 @@ function Login(props) {
         <button onClick={login}>Submit</button>
       </div>
 
-      <div>
+      {/* <div>
         <h1>Get User</h1>
         <button onClick={getUser}>Submit</button>
         {data ? <h1>Welcome Back {data.username}</h1> : null}
-      </div>
+      </div> */}
     </div>
   );
 }

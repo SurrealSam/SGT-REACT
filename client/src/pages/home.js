@@ -9,7 +9,7 @@ function Home(props) {
 
     return (
         <div>
-            <div>Welcome!</div>
+            
 
             <button onClick={()=>{
                 auth.logout(()=>{

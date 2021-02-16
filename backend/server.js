@@ -87,55 +87,55 @@ app.get("/user", (req, res) => {
 
 app.get("/items", (req, res) => {
   const filter = {
-    "type":"item"
+    "type": "item"
   }
-  Item.find(filter, (err, result)=>{
-    if (err){
+  Item.find(filter, (err, result) => {
+    if (err) {
       console.log(err);
-    }else{
+    } else {
       console.log(result);
       res.json(result);
     }
-    
-    
+
+
   })
-  
+
 });
 
 app.get("/movements/:id", (req, res) => {
   const sku = req.params.id;
   const filter = {
-    "type":"movement",
+    "type": "movement",
     "sku": sku
   }
-  Movement.find(filter, (err, result)=>{
-    if (err){
+  Movement.find(filter, (err, result) => {
+    if (err) {
       console.log(err);
-    }else{
+    } else {
       console.log(result);
       res.json(result);
     }
-    
-    
+
+
   })
-  
+
 });
 
 app.get("/movements", (req, res) => {
   const filter = {
-    "type":"movement"
+    "type": "movement"
   }
-  Movement.find(filter, (err, result)=>{
-    if (err){
+  Movement.find(filter, (err, result) => {
+    if (err) {
       console.log(err);
-    }else{
+    } else {
       console.log(result);
       res.json(result);
     }
-    
-    
+
+
   })
-  
+
 });
 
 
