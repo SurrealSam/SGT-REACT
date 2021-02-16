@@ -12,6 +12,7 @@ const User = require("./user");
 const dotenv = require('dotenv');
 const Item = require('./items');
 const Movement = require('./movement');
+const path = require('path');
 
 
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
@@ -31,12 +32,26 @@ mongoose.connect(
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
+/* app.use(
   cors({
     origin: "http://localhost:3000", // <-- location of the react app were connecting to
     credentials: true,
   })
-);
+); */
+const whitelist = ['http://localhost:3000'​, 'http://localhost:4000'​, 'https://sgt-inventory.herokuapp.com/']
+const corsOptions = {
+  origin: function (origin, callback) {
+    console.log("** Origin of request " + origin)
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      console.log("Origin acceptable")
+      callback(null, true)
+    } else {
+      console.log("Origin rejected")
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+app.use(cors(corsOptions))
 app.use(
   session({
     secret: process.env.SECRET_CODE,
@@ -144,6 +159,18 @@ app.get("/movements", (req, res) => {
 
 //----------------------------------------- END OF ROUTES---------------------------------------------------
 //Start Server
-app.listen(4000, () => {
-  console.log("Server Has Started");
+
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'client/build')));
+// Handle React routing, return all requests to React app
+  app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
+
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => {
+  console.log("Connect on port " + PORT);
 });
