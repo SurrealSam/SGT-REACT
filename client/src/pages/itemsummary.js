@@ -30,6 +30,8 @@ class ItemSummary extends React.Component {
         this.buildTotal = this.buildTotal.bind(this);
         this.buildWholeCard = this.buildWholeCard.bind(this);
         this.filterMovements = this.filterMovements.bind(this);
+        
+        
 
     };
 
@@ -56,7 +58,7 @@ class ItemSummary extends React.Component {
         return itemDiv;
     }
 
-    buildLot(item) {
+    /* buildLot(item) {
 
         let listColor;
 
@@ -80,7 +82,7 @@ class ItemSummary extends React.Component {
                 </div>
             </li>;
         return itemDiv;
-    }
+    } */
 
     filterMovements(sku) {
         var movementArray = [];
@@ -99,9 +101,11 @@ class ItemSummary extends React.Component {
             let totalQuantity = 0;
             let movementArray = this.filterMovements(item.sku);
             this.appendData(item);
+            let lots = [];
 
             movementArray.forEach(item => {
-                this.appendLot(item);
+                /* this.appendLot(item); */
+                lots.push(item.lot);
 
                 if (item.expiration) {
                     if (this.isNotExpired(item.expiration)) {
@@ -120,7 +124,7 @@ class ItemSummary extends React.Component {
                         }
                     }
                 } else {
-                    
+
                     if (item.movement === "shipping") {
 
 
@@ -137,9 +141,76 @@ class ItemSummary extends React.Component {
                 }
 
             })
+            let uniqueLots = [...new Set(lots)];
+            let builtLots = [];
+            uniqueLots.forEach(lot => {
+
+                builtLots.push({
+                    lot: lot,
+                    quantity: 0,
+                    expiration: '',
+                    isNotExpired: true
+                })
+
+            })
+            console.log(builtLots);
+            movementArray.forEach(movement => {
+
+                let i;
+                for (i = 0; i < builtLots.length; i++) {
+                    if (movement.lot === builtLots[i].lot) {
+
+                        if (movement.movement === "shipping") {
+
+                            builtLots[i].quantity = builtLots[i].quantity - parseInt(movement.quantity);
+
+                        }
+                        if (movement.movement === "receiving") {
+
+                            builtLots[i].quantity = builtLots[i].quantity + parseInt(movement.quantity);
+
+                        }
+                        if (movement.expiration) {
+
+                            builtLots[i].isNotExpired = this.isNotExpired(movement.expiration);
+                            builtLots[i].expiration = movement.expiration;
+
+                        }
+                    };
+                }
+            })
+            console.log(builtLots);
+            builtLots.forEach(lot =>{
+                this.appendLot(lot);
+            })
             this.appendTotal(totalQuantity);
         })
 
+    }
+
+    buildLot(lot) {
+
+        let listColor;
+
+        if (lot.isNotExpired) {
+            listColor = "list-group-item-success";
+        }
+        else {
+            listColor = "list-group-item-danger"
+        }
+
+        const itemDiv =
+            <li className={`list-group-item ${listColor}`}>
+                <div className="row">
+                    <div className="col-md-6 "></div>
+                    <div className="col-md-2">Lot: {lot.lot}</div>
+                    <div className="col-md-2">Expiration Date: {lot.expiration}</div>
+                    <div className="col-md-2">Quantity: {lot.quantity}</div>
+
+                </div><br></br>
+            </li>
+            ;
+        return itemDiv;
     }
 
 
@@ -173,15 +244,7 @@ class ItemSummary extends React.Component {
                     sku: item.sku,
                     name: item.name
                 });
-
-                /* this.appendData(item)
-                this.getMovementsBySKU(item.sku) */
-
-
-
             });
-
-
         });
     };
 
@@ -238,36 +301,7 @@ class ItemSummary extends React.Component {
 
             return res.data;
 
-            /* this.setState({
-                quantityTotal: 0
-            })
-            
-            console.log(res.data);
-    
-            
-            res.data.forEach(item => {
-                console.log(item.name);
-                this.appendLot(item);
-                
-    
-                if (item.movement === "shipping") {
-    
-                    this.setState({
-                        quantityTotal: this.state.quantityTotal - parseInt(item.quantity)
-                    })
-                    
-    
-                }
-                if (item.movement === "receiving") {
-    
-                    this.setState({
-                        quantityTotal: this.state.quantityTotal + parseInt(item.quantity)
-                    })
-                    
-                }
-            });
-    
-            this.appendTotal(this.state.quantityTotal); */
+
         });
     };
 
@@ -315,23 +349,6 @@ class ItemSummary extends React.Component {
     render() {
         return (
             <div id="mainContainer">
-
-                <div >
-                    <button onClick={this.getItems}>Show Items</button>
-
-                </div>
-                <div >
-                    <button onClick={this.getMovements}>Log Movements</button>
-
-                </div>
-                <div >
-                    <button onClick={() => this.isNotExpired(this.state.testDate)}>Test Dates</button>
-
-                </div>
-                <div >
-                    <button onClick={() => this.filterMovements("1814035")}>Filter Movements</button>
-
-                </div>
                 <div >
                     <button onClick={() => this.buildWholeCard()}>Build Cards</button>
 
