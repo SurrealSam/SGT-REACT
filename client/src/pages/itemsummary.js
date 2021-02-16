@@ -42,6 +42,8 @@ class ItemSummary extends React.Component {
             movements: this.getMovements()
         })
         this.getItems()
+        setTimeout(()=> this.buildWholeCard() , 1500);
+        
     }
 
     buildItem(item) {
@@ -351,10 +353,10 @@ class ItemSummary extends React.Component {
     render() {
         return (
             <div id="mainContainer">
-                <div >
+                {/* <div >
                     <button onClick={() => this.buildWholeCard()}>View Summary</button>
 
-                </div>
+                </div> */}
                 <div id="display-data-Container">
                     {this.displayData}
                 </div>
