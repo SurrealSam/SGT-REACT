@@ -92,7 +92,7 @@ class ItemSummary extends React.Component {
                 movementArray.push(this.state.movements[i]);
             }
         }
-        console.log(movementArray);
+        
         return movementArray;
     }
 
@@ -153,7 +153,7 @@ class ItemSummary extends React.Component {
                 })
 
             })
-            console.log(builtLots);
+            
             movementArray.forEach(movement => {
 
                 let i;
@@ -179,7 +179,7 @@ class ItemSummary extends React.Component {
                     };
                 }
             })
-            console.log(builtLots);
+            
             builtLots.forEach(lot =>{
                 this.appendLot(lot);
             })
@@ -237,7 +237,7 @@ class ItemSummary extends React.Component {
             url: "http://localhost:4000/items",
         }).then((res) => {
 
-            console.log(res.data);
+            
             res.data.forEach(item => {
 
                 this.state.items.push({
@@ -251,22 +251,22 @@ class ItemSummary extends React.Component {
     isNotExpired(date) {
         const today = this.makeDate();
         if (date === "") {
-            console.log("blank is true")
+            
             return true;
         }
         if (date < today) {
 
-            console.log(date + "is before " + today)
+            
             return false;
 
         } else if (date > today) {
 
-            console.log(date + " is after " + today)
+            
             return true;
 
         } else if (date === today) {
 
-            console.log(date + " is the same day as " + today)
+            
             return false;
 
         } else {
