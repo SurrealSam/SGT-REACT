@@ -236,10 +236,16 @@ class ItemSummary extends React.Component {
 
     getItems() {
 
-        Axios({
+        /* Axios({
             method: "GET",
             url: "http://localhost:4000/items",
-        }).then((res) => {
+        }) */
+
+        fetch("http://localhost:4000/items", {
+            method: 'get'
+
+        })
+        .then((res) => {
 
             
             res.data.forEach(item => {
@@ -284,10 +290,16 @@ class ItemSummary extends React.Component {
     getMovements() {
 
 
-        Axios({
+        /* Axios({
             method: "GET",
             url: "http://localhost:4000/movements",
-        }).then((res) => {
+        }) */
+
+        fetch("http://localhost:4000/movements", {
+            method: 'get'
+
+        })
+        .then((res) => {
 
             this.setState({
                 movements: res.data
@@ -296,7 +308,7 @@ class ItemSummary extends React.Component {
 
     };
 
-    getMovementsBySKU(sku) {
+    /* getMovementsBySKU(sku) {
 
         Axios({
             method: "GET",
@@ -307,7 +319,7 @@ class ItemSummary extends React.Component {
 
 
         });
-    };
+    }; */
 
     appendData(item) {
         this.displayData.push(this.buildItem(item));

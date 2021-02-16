@@ -20,7 +20,7 @@ function Login(props) {
     }).then((res) => console.log(res));
   }; */
   const login = () => {
-    Axios({
+    /* Axios({
       method: "POST",
       data: {
         username: loginUsername,
@@ -28,15 +28,26 @@ function Login(props) {
       },
       withCredentials: true,
       url: "http://localhost:4000/login",
-    }).then((res) => {
+    }) */
+
+    fetch("http://localhost:4000/login", {
+      method: "POST",
+      data: {
+        username: loginUsername,
+        password: loginPassword,
+      },
+      withCredentials: true
+
+    })
+      .then((res) => {
         console.log(res.data);
-        
-        if (res.data === "Successfully Authenticated"){
-            auth.login(()=> {
-                props.history.push("/home");
-            })
+
+        if (res.data === "Successfully Authenticated") {
+          auth.login(() => {
+            props.history.push("/home");
+          })
         }
-    });
+      });
   };
   /* const getUser = () => {
     Axios({
