@@ -238,7 +238,7 @@ class ItemSummary extends React.Component {
 
         Axios({
             method: "GET",
-            url: "http://localhost:4000/items",
+            url: "https://sgt-inventory.herokuapp.com/items",
         })
 
         /* fetch("http://localhost:4000/items", {
@@ -292,7 +292,7 @@ class ItemSummary extends React.Component {
 
         Axios({
             method: "GET",
-            url: "http://localhost:4000/movements",
+            url: "https://sgt-inventory.herokuapp.com/movements",
         })
 
         /* fetch("http://localhost:4000/movements", {
