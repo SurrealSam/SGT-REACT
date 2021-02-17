@@ -27,7 +27,7 @@ function Login(props) {
         password: loginPassword,
       },
       withCredentials: true,
-      url: "http://localhost:4000/login",
+      url: "https://sgt-inventory.herokuapp.com/login",
     })
 
     /* fetch("http://localhost:4000/login", {
