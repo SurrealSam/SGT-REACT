@@ -20,7 +20,7 @@ function Login(props) {
     }).then((res) => console.log(res));
   }; */
   const login = () => {
-    /* Axios({
+    Axios({
       method: "POST",
       data: {
         username: loginUsername,
@@ -28,9 +28,9 @@ function Login(props) {
       },
       withCredentials: true,
       url: "http://localhost:4000/login",
-    }) */
+    })
 
-    fetch("http://localhost:4000/login", {
+    /* fetch("http://localhost:4000/login", {
       method: "POST",
       data: {
         username: loginUsername,
@@ -38,7 +38,7 @@ function Login(props) {
       },
       withCredentials: true
 
-    })
+    }) */
       .then((res) => {
         console.log(res.data);
 

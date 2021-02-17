@@ -32,13 +32,13 @@ mongoose.connect(
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-/* app.use(
+app.use(
   cors({
     origin: "http://localhost:3000", // <-- location of the react app were connecting to
     credentials: true,
   })
-); */
-const whitelist = ['http://localhost:3000'​, 'http://localhost:4000'​, 'https://sgt-inventory.herokuapp.com/']
+);
+/* const whitelist = ['http://localhost:3000'​, 'http://localhost:4000'​, 'https://sgt-inventory.herokuapp.com/']
 const corsOptions = {
   origin: function (origin, callback) {
     console.log("** Origin of request " + origin)
@@ -50,8 +50,8 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'))
     }
   }
-}
-app.use(cors(corsOptions))
+} 
+app.use(cors(corsOptions))*/
 app.use(
   session({
     secret: process.env.SECRET_CODE,

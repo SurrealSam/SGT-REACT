@@ -21,7 +21,7 @@ class ItemSummary extends React.Component {
         this.buildItem = this.buildItem.bind(this);
         this.getItems = this.getItems.bind(this);
         this.getMovements = this.getMovements.bind(this);
-        this.getMovementsBySKU = this.getMovementsBySKU.bind(this);
+        /* this.getMovementsBySKU = this.getMovementsBySKU.bind(this); */
         this.isNotExpired = this.isNotExpired.bind(this);
         this.makeDate = this.makeDate.bind(this);
         this.appendLot = this.appendLot.bind(this);
@@ -236,15 +236,15 @@ class ItemSummary extends React.Component {
 
     getItems() {
 
-        /* Axios({
+        Axios({
             method: "GET",
             url: "http://localhost:4000/items",
-        }) */
+        })
 
-        fetch("http://localhost:4000/items", {
+        /* fetch("http://localhost:4000/items", {
             method: 'get'
 
-        })
+        }) */
         .then((res) => {
 
             
@@ -290,15 +290,15 @@ class ItemSummary extends React.Component {
     getMovements() {
 
 
-        /* Axios({
+        Axios({
             method: "GET",
             url: "http://localhost:4000/movements",
-        }) */
+        })
 
-        fetch("http://localhost:4000/movements", {
+        /* fetch("http://localhost:4000/movements", {
             method: 'get'
 
-        })
+        }) */
         .then((res) => {
 
             this.setState({
