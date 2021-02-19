@@ -260,6 +260,9 @@ class ItemSummary extends React.Component {
 
     isNotExpired(date) {
         const today = this.makeDate();
+        if (date === "DEFECT"){
+            return false;
+        }
         if (date === "") {
             
             return true;
