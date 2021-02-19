@@ -281,8 +281,8 @@ class ItemSummary extends React.Component {
 
         } else {
 
-            console.log("expiration cannot be read")
-            return;
+            console.log("expiration cannot be read or is invalid")
+            return false;
         }
 
     }
