@@ -30,6 +30,7 @@ class ItemSummary extends React.Component {
         this.buildTotal = this.buildTotal.bind(this);
         this.buildWholeCard = this.buildWholeCard.bind(this);
         this.filterMovements = this.filterMovements.bind(this);
+        this.makeTwoMonthDate = this.makeTwoMonthDate.bind(this);
         
         
 
@@ -151,7 +152,8 @@ class ItemSummary extends React.Component {
                     lot: lot,
                     quantity: 0,
                     expiration: '',
-                    isNotExpired: true
+                    isNotExpired: true,
+                    doesNotExpireSoon: true
                 })
 
             })
@@ -175,6 +177,7 @@ class ItemSummary extends React.Component {
                         if (movement.expiration) {
 
                             builtLots[i].isNotExpired = this.isNotExpired(movement.expiration);
+                            builtLots[i].doesNotExpireSoon = this.doesNotExpireSoon(movement.expiration);
                             builtLots[i].expiration = movement.expiration;
 
                         }
@@ -197,7 +200,11 @@ class ItemSummary extends React.Component {
         if (lot.isNotExpired) {
             listColor = "list-group-item-success";
         }
-        else {
+        if (lot.doesNotExpireSoon === false) {
+            listColor = "list-group-item-warning"
+        }
+        
+        if (lot.isNotExpired === false) {
             listColor = "list-group-item-danger"
         }
 
@@ -257,6 +264,38 @@ class ItemSummary extends React.Component {
             });
         });
     };
+
+    doesNotExpireSoon(date) {
+        const today = this.makeTwoMonthDate();
+        if (date === "DEFECT"){
+            return false;
+        }
+        if (date === "") {
+            
+            return true;
+        }
+        if (date < today) {
+
+            
+            return false;
+
+        } else if (date > today) {
+
+            
+            return true;
+
+        } else if (date === today) {
+
+            
+            return false;
+
+        } else {
+
+            console.log("expiration cannot be read or is invalid")
+            return false;
+        }
+
+    }
 
     isNotExpired(date) {
         const today = this.makeDate();
@@ -350,6 +389,35 @@ class ItemSummary extends React.Component {
         var year = todayDate.getFullYear();
         var month = todayDate.getMonth() + 1;
         var day = todayDate.getDate();
+
+
+        if (day < 10) {
+            day = "0" + day.toString();
+        }
+        if (month < 10) {
+            month = "0" + (month.toString());
+        }
+        var fullDate = year + "/" + month + "/" + day;
+        return fullDate;
+
+
+    };
+
+    makeTwoMonthDate() {
+
+        var todayDate = new Date();
+        var year = todayDate.getFullYear();
+        var month = todayDate.getMonth() + 3;
+        var day = todayDate.getDate();
+
+        if (month == "13") {
+            month = "1";
+            year = year + 1;
+        }
+        if (month == "14") {
+            month = "2";
+            year = year + 1;
+        }
 
 
         if (day < 10) {
