@@ -196,6 +196,7 @@ class ItemSummary extends React.Component {
     buildLot(lot) {
 
         let listColor;
+        var expiration = lot.expiration;
 
         if (lot.isNotExpired) {
             listColor = "list-group-item-success";
@@ -203,17 +204,24 @@ class ItemSummary extends React.Component {
         if (lot.doesNotExpireSoon === false) {
             listColor = "list-group-item-warning"
         }
+        if (lot.lot === "Hayward") {
+            listColor = "list-group-item-light"
+            expiration = "Not tracked at remote location"
+        }
         
         if (lot.isNotExpired === false) {
             listColor = "list-group-item-danger"
         }
+
+        
+        
 
         const itemDiv =
             <li className={`list-group-item ${listColor}`}>
                 <div className="row">
                     
                     <div className="col-md-2">Lot: {lot.lot}</div>
-                    <div className="col-md-2">Expiration Date: {lot.expiration}</div>
+                    <div className="col-md-2">Expiration Date: {expiration}</div>
                     <div className="col-md-2">Quantity: {lot.quantity}</div>
                     <div className="col-md-6 "></div>
 
