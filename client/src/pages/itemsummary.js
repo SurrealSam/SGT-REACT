@@ -214,10 +214,15 @@ class ItemSummary extends React.Component {
         }
 
         
+        let display = "";
+
+        if (lot.quantity == 0) {
+            display = "d-none";
+        }
         
 
         const itemDiv =
-            <li className={`list-group-item ${listColor}`}>
+            <li className={`list-group-item ${listColor} ${display}`}>
                 <div className="row">
                     
                     <div className="col-md-2">Lot: {lot.lot}</div>
