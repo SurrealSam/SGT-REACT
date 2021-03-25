@@ -161,7 +161,7 @@ class ItemSummary extends React.Component {
                     if (item.movement === "receiving") {
 
                         totalSellable = totalSellable + parseInt(item.quantity)
-                        totalQuantity = totalQuantity - parseInt(item.quantity);
+                        totalQuantity = totalQuantity + parseInt(item.quantity);
 
                     }
                 }
