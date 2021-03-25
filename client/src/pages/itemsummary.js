@@ -101,6 +101,8 @@ class ItemSummary extends React.Component {
 
     buildWholeCard() {
         this.state.items.forEach(item => {
+            let totalSellable = 0;
+            let totalExpired = 0;
             let totalQuantity = 0;
             let movementArray = this.filterMovements(item.sku);
             this.appendData(item);
@@ -115,14 +117,33 @@ class ItemSummary extends React.Component {
                         if (item.movement === "shipping") {
 
 
-                            totalQuantity = totalQuantity - parseInt(item.quantity)
+                            totalSellable = totalSellable - parseInt(item.quantity);
+                            totalQuantity = totalQuantity - parseInt(item.quantity);
 
 
 
                         }
                         if (item.movement === "receiving") {
 
-                            totalQuantity = totalQuantity + parseInt(item.quantity)
+                            totalSellable = totalSellable + parseInt(item.quantity)
+                            totalQuantity = totalQuantity + parseInt(item.quantity);
+
+                        }
+                    }
+                    if (this.isNotExpired(item.expiration) === false) {
+                        if (item.movement === "shipping") {
+
+
+                            totalExpired = totalExpired - parseInt(item.quantity);
+                            totalQuantity = totalQuantity - parseInt(item.quantity);
+
+
+
+                        }
+                        if (item.movement === "receiving") {
+
+                            totalExpired = totalExpired + parseInt(item.quantity)
+                            totalQuantity = totalQuantity + parseInt(item.quantity);
 
                         }
                     }
@@ -131,14 +152,16 @@ class ItemSummary extends React.Component {
                     if (item.movement === "shipping") {
 
 
-                        totalQuantity = totalQuantity - parseInt(item.quantity)
+                        totalSellable = totalSellable - parseInt(item.quantity)
+                        totalQuantity = totalQuantity - parseInt(item.quantity);
 
 
 
                     }
                     if (item.movement === "receiving") {
 
-                        totalQuantity = totalQuantity + parseInt(item.quantity)
+                        totalSellable = totalSellable + parseInt(item.quantity)
+                        totalQuantity = totalQuantity - parseInt(item.quantity);
 
                     }
                 }
@@ -188,7 +211,7 @@ class ItemSummary extends React.Component {
             builtLots.forEach(lot =>{
                 this.appendLot(lot);
             })
-            this.appendTotal(totalQuantity);
+            this.appendTotal(totalSellable, totalExpired, totalQuantity);
         })
 
     }
@@ -237,7 +260,7 @@ class ItemSummary extends React.Component {
     }
 
 
-    buildTotal(total) {
+    buildTotal(totalSellable, totalExpired, totalQuantity) {
 
 
 
@@ -245,8 +268,11 @@ class ItemSummary extends React.Component {
             <li>
                 <div className="row">
                     <div className="col-md-4 "></div>
-                    <div className="col-md-2">Total: {total}</div>
-                    <div className="col-md-6 "></div>
+                    <div className="col-md-2">Sellable: {totalSellable}</div>
+                    <div className="col-md-2">Expired/Unsellable: {totalExpired}</div>
+                    <div className="col-md-2">Total: {totalQuantity}</div>
+                    <div className="col-md-2"></div>
+
 
                 </div><br></br>
             </li>
@@ -389,8 +415,8 @@ class ItemSummary extends React.Component {
             showdata: this.displayData
         });
     }
-    appendTotal(total) {
-        this.displayData.push(this.buildTotal(total));
+    appendTotal(totalSellable, totalExpired, totalQuantity) {
+        this.displayData.push(this.buildTotal(totalSellable, totalExpired, totalQuantity));
         this.setState({
             showdata: this.displayData
         });
