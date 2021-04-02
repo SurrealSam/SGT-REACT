@@ -43,7 +43,7 @@ class ItemSummary extends React.Component {
             movements: this.getMovements()
         })
         this.getItems()
-        setTimeout(()=> this.buildWholeCard() , 1500);
+        setTimeout(()=> this.buildWholeCard() , 2500);
         
     }
 
