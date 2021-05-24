@@ -474,7 +474,7 @@ class ItemSummary extends React.Component {
 
     reloadData() {
         this.setState({
-            displayData: ""
+            displayData: []
         });
         this.buildWholeCard();
     }
