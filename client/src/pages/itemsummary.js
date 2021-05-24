@@ -32,8 +32,8 @@ class ItemSummary extends React.Component {
         this.filterMovements = this.filterMovements.bind(this);
         this.makeTwoMonthDate = this.makeTwoMonthDate.bind(this);
         this.reloadData = this.reloadData.bind(this);
-        
-        
+
+
 
     };
 
@@ -44,8 +44,8 @@ class ItemSummary extends React.Component {
             movements: this.getMovements()
         })
         this.getItems()
-        setTimeout(()=> this.buildWholeCard() , 3500);
-        
+        setTimeout(() => this.buildWholeCard(), 3500);
+
     }
 
     buildItem(item) {
@@ -96,7 +96,7 @@ class ItemSummary extends React.Component {
                 movementArray.push(this.state.movements[i]);
             }
         }
-        
+
         return movementArray;
     }
 
@@ -181,7 +181,7 @@ class ItemSummary extends React.Component {
                 })
 
             })
-            
+
             movementArray.forEach(movement => {
 
                 let i;
@@ -208,8 +208,8 @@ class ItemSummary extends React.Component {
                     };
                 }
             })
-            
-            builtLots.forEach(lot =>{
+
+            builtLots.forEach(lot => {
                 this.appendLot(lot);
             })
             this.appendTotal(totalSellable, totalExpired, totalQuantity);
@@ -232,23 +232,23 @@ class ItemSummary extends React.Component {
             listColor = "list-group-item-light"
             expiration = "Not tracked at remote location"
         }
-        
+
         if (lot.isNotExpired === false) {
             listColor = "list-group-item-danger"
         }
 
-        
+
         let display = "";
 
         if (lot.quantity == 0) {
             display = "d-none";
         }
-        
+
 
         const itemDiv =
             <li className={`list-group-item ${listColor} ${display}`}>
                 <div className="row">
-                    
+
                     <div className="col-md-2">Lot: {lot.lot}</div>
                     <div className="col-md-2">Expiration Date: {expiration}</div>
                     <div className="col-md-2">Quantity: {lot.quantity}</div>
@@ -288,45 +288,45 @@ class ItemSummary extends React.Component {
             url: "https://sgt-inventory.herokuapp.com/items",
         })
 
-        /* fetch("http://localhost:4000/items", {
-            method: 'get'
+            /* fetch("http://localhost:4000/items", {
+                method: 'get'
+    
+            }) */
+            .then((res) => {
 
-        }) */
-        .then((res) => {
 
-            
-            res.data.forEach(item => {
+                res.data.forEach(item => {
 
-                this.state.items.push({
-                    sku: item.sku,
-                    name: item.name
+                    this.state.items.push({
+                        sku: item.sku,
+                        name: item.name
+                    });
                 });
             });
-        });
     };
 
     doesNotExpireSoon(date) {
         const today = this.makeTwoMonthDate();
-        if (date === "DEFECT"){
+        if (date === "DEFECT") {
             return false;
         }
         if (date === "") {
-            
+
             return true;
         }
         if (date < today) {
 
-            
+
             return false;
 
         } else if (date > today) {
 
-            
+
             return true;
 
         } else if (date === today) {
 
-            
+
             return false;
 
         } else {
@@ -339,26 +339,26 @@ class ItemSummary extends React.Component {
 
     isNotExpired(date) {
         const today = this.makeDate();
-        if (date === "DEFECT"){
+        if (date === "DEFECT") {
             return false;
         }
         if (date === "") {
-            
+
             return true;
         }
         if (date < today) {
 
-            
+
             return false;
 
         } else if (date > today) {
 
-            
+
             return true;
 
         } else if (date === today) {
 
-            
+
             return false;
 
         } else {
@@ -377,16 +377,16 @@ class ItemSummary extends React.Component {
             url: "https://sgt-inventory.herokuapp.com/movements",
         })
 
-        /* fetch("http://localhost:4000/movements", {
-            method: 'get'
+            /* fetch("http://localhost:4000/movements", {
+                method: 'get'
+    
+            }) */
+            .then((res) => {
 
-        }) */
-        .then((res) => {
-
-            this.setState({
-                movements: res.data
-            })
-        });
+                this.setState({
+                    movements: res.data
+                })
+            });
 
     };
 
@@ -473,6 +473,7 @@ class ItemSummary extends React.Component {
     };
 
     reloadData() {
+        console.log("reloading");
         this.setState({
             displayData: []
         });
@@ -484,13 +485,18 @@ class ItemSummary extends React.Component {
         return (
             <div id="mainContainer">
                 {<div >
-                    <button onClick={() => this.reloadData()}>Refresh Data</button>
+
+
+                    <button onClick={() => {
+                        console.log("clicked")
+                        this.reloadData()
+                    }}>Refresh Data</button>
 
                 </div>}
                 <div id="display-data-Container">
                     {this.displayData}
                 </div>
-            </div>
+            </div >
         );
     }
 }
