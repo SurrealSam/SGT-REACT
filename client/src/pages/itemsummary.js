@@ -31,6 +31,7 @@ class ItemSummary extends React.Component {
         this.buildWholeCard = this.buildWholeCard.bind(this);
         this.filterMovements = this.filterMovements.bind(this);
         this.makeTwoMonthDate = this.makeTwoMonthDate.bind(this);
+        this.reloadData = this.reloadData.bind(this);
         
         
 
@@ -43,7 +44,7 @@ class ItemSummary extends React.Component {
             movements: this.getMovements()
         })
         this.getItems()
-        setTimeout(()=> this.buildWholeCard() , 2500);
+        setTimeout(()=> this.buildWholeCard() , 3500);
         
     }
 
@@ -471,14 +472,21 @@ class ItemSummary extends React.Component {
 
     };
 
+    reloadData() {
+        this.setState({
+            displayData: ""
+        });
+        this.buildWholeCard();
+    }
+
 
     render() {
         return (
             <div id="mainContainer">
-                {/* <div >
-                    <button onClick={() => this.buildWholeCard()}>View Summary</button>
+                {<div >
+                    <button onClick={() => this.reloadData()}>Refresh Data</button>
 
-                </div> */}
+                </div>}
                 <div id="display-data-Container">
                     {this.displayData}
                 </div>
